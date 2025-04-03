@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    image: ${DOCKER_USERNAME}/ci-cd-nodejs-app:latest  # This references the image pushed to Docker Hub
+    container_name: ci-cd-nodejs-app
+    ports:
+      - "3000:3000"  # Expose port 3000 to the host
+    environment:
+      - NODE_ENV=production  # Set the environment to production
+    networks:
+      - app-network
+    restart: unless-stopped  # Restart the container unless it's explicitly stopped
+
+networks:
+  app-network:
+    driver: bridge
