@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: ${DOCKER_USERNAME}/ci-cd-nodejs-app:latest  # This references the image pushed to Docker Hub
+    image: 09014579884/ci-cd-nodejs-app:latest  # This references the image pushed to Docker Hub
     container_name: ci-cd-nodejs-app
     ports:
       - "3000:3000"  # Expose port 3000 to the host
