@@ -1,0 +1,20 @@
+// package.json
+{
+  "name": "ci-cd-nodejs-app",
+  "version": "1.0.0",
+  "description": "CI/CD Pipeline Example for Node.js App",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "mrgeek",
+  "license": "ISC"
+}
