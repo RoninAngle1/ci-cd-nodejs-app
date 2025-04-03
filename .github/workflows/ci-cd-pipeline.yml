@@ -13,7 +13,10 @@ on:
 jobs:
   build:
     runs-on: self-hosted  # Specify the type of runner (can also use self-hosted runners)
-
+    env: 
+      https_proxy: http://192.168.56.1:10810
+      http_proxy: http://192.168.56.1:10810
+      
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
