@@ -32,7 +32,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:${{ github.run_id }} .
           docker tag ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:${{ github.run_id }} ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:${{ github.run_id }}
 
       # Step 4: Copy docker-compose.yml file to /mnt directory
       - name: Copy docker-compose.yml to runner's /mnt directory
