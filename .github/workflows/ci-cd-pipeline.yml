@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Specify the type of runner (can also use self-hosted runners)
+    runs-on: self-hosted  # Specify the type of runner (can also use self-hosted runners)
 
     steps:
       # Step 1: Checkout the repository
