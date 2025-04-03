@@ -1,0 +1,54 @@
+# .github/workflows/ci-cd-pipeline.yml
+name: CI/CD Pipeline for Node.js App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run tests (if any)
+      - name: Run tests
+        run: npm test
+
+      # Step 5: Build Docker image
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:${{ github.sha }} .
+
+      # Step 6: Push Docker image to Docker Hub
+      - name: Push Docker Image to DockerHub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          docker tag ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:latest
+
+      # Step 7: Deploy Docker Container (Locally or in any environment)
+      - name: Deploy Docker Container Locally
+        run: |
+          docker run -d -p 3000:3000 --name ci-cd-nodejs-app ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-app:latest
